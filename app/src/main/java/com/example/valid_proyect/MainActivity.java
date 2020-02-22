@@ -11,14 +11,20 @@ import android.os.Bundle;
 
 import com.example.valid_proyect.fragments.Artist;
 import com.example.valid_proyect.fragments.Tracks;
+import com.firebase.ui.auth.AuthUI;
 import com.google.android.material.tabs.TabLayout;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int MY_REQUEST_CODE = 7117;
     private TabLayout tabs;
     private ViewPager viewPager;
     private String text1,text2;
     private Adapter adapter;
+    private List<AuthUI.IdpConfig> providers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +33,22 @@ public class MainActivity extends AppCompatActivity {
         tabs = findViewById(R.id.tabselection);
         viewPager = findViewById(R.id.containerpage);
         SetUpViewPager(viewPager,tabs);
+        /*providers = Arrays.asList(
+                new AuthUI.IdpConfig.EmailBuilder().build(),
+                new AuthUI.IdpConfig.PhoneBuilder().build(),
+                new AuthUI.IdpConfig.FacebookBuilder().build(),
+                new AuthUI.IdpConfig.GoogleBuilder().build()
+        );
+        showSingIn();*/
+    }
+
+    private void showSingIn() {
+        startActivityForResult(
+                AuthUI.getInstance().createSignInIntentBuilder()
+                .setAvailableProviders(providers)
+                .setTheme(R.style.MyTheme)
+                .build(),MY_REQUEST_CODE
+        );
     }
 
     private void SetUpViewPager(ViewPager viewPager, TabLayout tabs) {
