@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="130dp"
+    app:cardCornerRadius="5dp"
+    app:cardUseCompatPadding="true"
+    android:paddingBottom="10dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/grisOscuro">
+
+   <TextView
+        android:id="@+id/txtNameArtist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/blanco"
+        android:background="@color/grisOscuro"
+       android:paddingLeft="10dp"
+        android:textAlignment="textStart"
+        android:paddingTop="10dp"
+        android:layout_toRightOf="@+id/star"
+        android:text="Julian"
+        android:textSize="20sp"/>
+    <ImageView
+        android:id="@+id/star"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_margin="20dp"
+        android:src="@mipmap/person"
+        />
+
+        <ImageView
+            android:id="@+id/imgVer"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:layout_gravity="right"
+            android:layout_below="@+id/txtNameArtist"
+            android:background="@color/grisOscuro"
+            android:paddingLeft="10dp"
+            android:layout_toRightOf="@+id/star"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:src="@mipmap/ojo"
+            />
+
+        <TextView
+            android:id="@+id/txtViews"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="123456897"
+            android:paddingLeft="10dp"
+            android:textColor="@color/blanco"
+            android:textSize="18sp"
+            android:layout_toRightOf="@+id/imgVer"
+            android:layout_below="@+id/txtNameArtist"
+
+            android:background="@color/grisOscuro">
+
+        </TextView>
+        <TextView
+            android:id="@+id/txtListen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Listen me"
+            android:paddingLeft="10dp"
+            android:textColor="@color/blanco"
+            android:textSize="14sp"
+            android:layout_toRightOf="@+id/star"
+            android:layout_below="@+id/imgVer"
+            android:background="@color/grisOscuro">
+
+        </TextView>
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_toRightOf="@+id/star"
+            android:layout_below="@+id/txtListen"
+            android:background="@color/grisclaro"/>
+
+    <!--<TextView
+        android:id="@+id/txtDescSitio"
+        android:layout_toRightOf="@+id/firstColumn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/grisOscuro"
+        android:maxLines="1"
+        android:padding="16dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+        android:textColor="@android:color/white"
+        android:text="Mosquera"/>
+
+    <ImageView
+        android:id="@+id/imgVer"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="right"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="77dip"
+        android:src="@mipmap/ojo"
+        />-->
+
+    </RelativeLayout>
+
+
+
+
+</androidx.cardview.widget.CardView>
