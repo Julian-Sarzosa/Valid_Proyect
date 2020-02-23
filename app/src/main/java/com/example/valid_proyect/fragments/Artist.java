@@ -1,7 +1,7 @@
 package com.example.valid_proyect.fragments;
 
+import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,16 +13,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.valid_proyect.R;
 import com.example.valid_proyect.adapter.ArtistAdapter;
+import com.example.valid_proyect.database.ArtistsSql;
+import com.example.valid_proyect.database.Database;
 import com.example.valid_proyect.interfaces.Artist_Interface;
-import com.example.valid_proyect.pojo.NewPojoTopArtists;
+import com.example.valid_proyect.models.PojoArtists;
+import com.example.valid_proyect.models.PojoImages;
+import com.example.valid_proyect.models.PojoTopArtistsApi;
+import com.example.valid_proyect.utils.Contants;
 import com.example.valid_proyect.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
 
 public class Artist extends Fragment {
 
@@ -30,9 +35,10 @@ public class Artist extends Fragment {
     private View view;
 
     RecyclerView recyclerView;
-    List<NewPojoTopArtists.topartists.artist> artistList;
+    List<PojoArtists> artistList;
     ArtistAdapter artistAdapter;
     ArtistAdapter.IAdapterRecylcer click;
+    Database sqlite_open_helper;
 
     public Artist() {
     }
@@ -58,33 +64,71 @@ public class Artist extends Fragment {
 
     private void inflateRecycler() {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
-        artistAdapter = new ArtistAdapter(getActivity(), artistList,click);
+        artistAdapter = new ArtistAdapter( getActivity(),artistList,click);
+        //artistAdapter = new ArtistAdapter(getActivity(), artistList,click);
 
         recyclerView.setAdapter(artistAdapter);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
+        recyclerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     private void chargeJson() {
         String url = "http://ws.audioscrobbler.com/2.0/";
 
         Artist_Interface retartist = Utils.getClient(url).create(Artist_Interface.class);
-        Call<NewPojoTopArtists> call = retartist.getUsersTopArtist();
+        Call<PojoTopArtistsApi> call = retartist.getUsersTopArtist();
 
         Toast.makeText(getContext(), "Consultando Registros. espere por favor", Toast.LENGTH_LONG).show();
-        call.enqueue(new Callback<NewPojoTopArtists>() {
+        call.enqueue(new Callback<PojoTopArtistsApi>() {
             @Override
-            public void onResponse(Call<NewPojoTopArtists> call, Response<NewPojoTopArtists> response) {
+            public void onResponse(Call<PojoTopArtistsApi> call, Response<PojoTopArtistsApi> response) {
+
                 Toast.makeText(getContext(), response.message(), Toast.LENGTH_SHORT).show();
-                NewPojoTopArtists artists = (NewPojoTopArtists) response.body();
+                PojoTopArtistsApi artists = (PojoTopArtistsApi) response.body();
                 artistList =  artists.topartists.artist;
+
+                ArtistsSql artistsSql = new ArtistsSql(getContext());
+                if(artistsSql.insertAndClear(artistList)){
+                    Toast.makeText(getContext(), "Datos guardados de los Artistas en SQLITE.", Toast.LENGTH_SHORT).show();
+                }
+
                 inflateRecycler();
             }
 
             @Override
-            public void onFailure(Call<NewPojoTopArtists> call, Throwable error) {
-                Log.e("error", error.toString());
-                Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<PojoTopArtistsApi> call, Throwable error) {
+                ArtistsSql artistsSql = new ArtistsSql(getContext());
+                Cursor cursor = artistsSql.read();
+
+                List<PojoArtists> pojoArtists= new ArrayList<>();
+
+                while(cursor.moveToNext()){
+                    //imagen
+                    PojoImages imagesTemp = new PojoImages();
+                    imagesTemp.text = cursor.getString(Contants.topArtists_image_inx);
+
+                    //lista de imagens que solo se usa 1
+                    List<PojoImages> pojoImages= new ArrayList<>();
+                    pojoImages.add(imagesTemp);
+
+                    PojoArtists artistsTemp = new PojoArtists();
+                    artistsTemp.name = cursor.getString(Contants.topArtists_name_inx);
+                    artistsTemp.image = pojoImages;
+                    artistsTemp.streamable = cursor.getString(Contants.topArtists_streamable_inx);
+                    artistsTemp.playcount = cursor.getString(Contants.topArtists_playcount_inx);
+
+                    pojoArtists.add(artistsTemp);
+                }
+
+                //setear lista global
+                artistList = pojoArtists;
+                inflateRecycler();
             }
         });
     }

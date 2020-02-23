@@ -6,11 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <EditText
+        android:id="@+id/search"
+        android:hint="Buscador"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp">
+
+    </EditText>
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabselection"
         android:layout_width="match_parent"
         android:textColor="@color/blanco"
         android:background="@color/grisOscuro"
+        android:layout_below="@+id/search"
         android:layout_height="wrap_content">
     </com.google.android.material.tabs.TabLayout>
     <!--THIS IS CONTAINER-->
