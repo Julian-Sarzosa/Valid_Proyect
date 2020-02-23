@@ -34,7 +34,7 @@
 
         <ImageView
             android:id="@+id/imgVer"
-            android:layout_width="40dp"
+            android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="right"
             android:layout_below="@+id/txtNameArtist"
@@ -50,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="123456897"
-            android:paddingLeft="10dp"
+            android:paddingLeft="20dp"
             android:textColor="@color/blanco"
             android:textSize="18sp"
             android:layout_toRightOf="@+id/imgVer"
@@ -69,6 +69,19 @@
             android:textSize="14sp"
             android:layout_toRightOf="@+id/star"
             android:layout_below="@+id/imgVer"
+            android:background="@color/grisOscuro">
+
+        </TextView>
+        <TextView
+            android:id="@+id/urlview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Listen me"
+            android:paddingLeft="10dp"
+            android:textColor="@color/blanco"
+            android:textSize="8sp"
+            android:layout_toRightOf="@+id/star"
+            android:layout_below="@+id/txtListen"
             android:background="@color/grisOscuro">
 
         </TextView>

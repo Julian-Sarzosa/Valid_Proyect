@@ -37,7 +37,6 @@ public class Tracks extends Fragment {
     RecyclerView recyclerView;
     List<PojoTracks> tracksList;
     TrackAdapter tracksAdapter;
-    TrackAdapter.IAdaptersRecylcer click;
 
     public Tracks() {
         // Required empty public constructor
@@ -65,7 +64,7 @@ public class Tracks extends Fragment {
 
     private void inflateRecycler() {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
-        tracksAdapter = new TrackAdapter(getActivity(), tracksList,click);
+        tracksAdapter = new TrackAdapter(getActivity(), tracksList);
 
         recyclerView.setAdapter(tracksAdapter);
         recyclerView.setLayoutManager(layoutManager);

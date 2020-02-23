@@ -1,6 +1,8 @@
 package com.example.valid_proyect.fragments;
 
+import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,8 +39,8 @@ public class Artist extends Fragment {
     RecyclerView recyclerView;
     List<PojoArtists> artistList;
     ArtistAdapter artistAdapter;
-    ArtistAdapter.IAdapterRecylcer click;
     Database sqlite_open_helper;
+    String clicks;
 
     public Artist() {
     }
@@ -64,8 +66,7 @@ public class Artist extends Fragment {
 
     private void inflateRecycler() {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
-        artistAdapter = new ArtistAdapter( getActivity(),artistList,click);
-        //artistAdapter = new ArtistAdapter(getActivity(), artistList,click);
+        artistAdapter = new ArtistAdapter( getActivity(),artistList);
 
         recyclerView.setAdapter(artistAdapter);
         recyclerView.setLayoutManager(layoutManager);
@@ -119,6 +120,7 @@ public class Artist extends Fragment {
 
                     PojoArtists artistsTemp = new PojoArtists();
                     artistsTemp.name = cursor.getString(Contants.topArtists_name_inx);
+                    artistsTemp.url = cursor.getString(Contants.topArtists_urlcount_inx);
                     artistsTemp.image = pojoImages;
                     artistsTemp.streamable = cursor.getString(Contants.topArtists_streamable_inx);
                     artistsTemp.playcount = cursor.getString(Contants.topArtists_playcount_inx);
