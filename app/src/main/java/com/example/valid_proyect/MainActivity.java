@@ -5,18 +5,27 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 
+import com.example.valid_proyect.adapter.ArtistAdapter;
+import com.example.valid_proyect.database.ArtistsSql;
 import com.example.valid_proyect.fragments.Artist;
 import com.example.valid_proyect.fragments.Tracks;
+import com.example.valid_proyect.models.PojoArtists;
+import com.example.valid_proyect.models.PojoImages;
 import com.example.valid_proyect.models.PojoTracks;
+import com.example.valid_proyect.utils.Contants;
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,6 +35,10 @@ public class MainActivity extends AppCompatActivity {
     private String text1,text2;
     private Adapter adapter;
     private EditText search;
+    String searchelement;
+    RecyclerView recyclerView;
+    List<PojoArtists> artistList;
+    ArtistAdapter artistAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +48,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.containerpage);
         SetUpViewPager(viewPager,tabs);
         search = findViewById(R.id.search);
-        //searchList();
-        /**/
-    }
-
-    private void searchList() {
+        searchelement = search.getText().toString();
         search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -53,12 +62,27 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                filter(s.toString());
+                //filter(s.toString());
             }
         });
     }
 
-    private void filter(String toString) {
+    private void filter(String element) {
+        String artistl;
+        ArtistsSql artistsSql = new ArtistsSql(this);
+        Cursor cursor = artistsSql.read();
+
+        List<PojoArtists> pojoArtists= new ArrayList<>();
+
+        while(cursor.moveToNext()){
+            PojoArtists artistsTemp = new PojoArtists();
+            artistsTemp.name = cursor.getString(Contants.topArtists_name_inx);
+            artistl = artistsTemp.name;
+            if (artistl.toLowerCase().contains(element.toLowerCase())){
+                pojoArtists.add(artistsTemp);
+            }
+        }
+        artistAdapter.filter(pojoArtists);
     }
 
     private void SetUpViewPager(ViewPager viewPager, TabLayout tabs) {

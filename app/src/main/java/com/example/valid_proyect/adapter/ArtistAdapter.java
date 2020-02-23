@@ -1,17 +1,24 @@
 package com.example.valid_proyect.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.valid_proyect.R;
+import com.example.valid_proyect.database.ArtistsSql;
+import com.example.valid_proyect.fragments.Artist;
 import com.example.valid_proyect.models.PojoArtists;
+import com.example.valid_proyect.utils.Contants;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -20,12 +27,11 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistView
 
     private List<PojoArtists> artistList;
     Context context;
-    IAdapterRecylcer click;
+    String urls;
 
-    public ArtistAdapter(Context context, List<PojoArtists> artistList, IAdapterRecylcer click  ) {
+    public ArtistAdapter(Context context, List<PojoArtists> artistList) {
         this.artistList = artistList;
         this.context = context;
-        this.click = click;
     }
 
     @NonNull
@@ -40,7 +46,9 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistView
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                click.clickItem(artistList.get(position));
+                urls = artistList.get(position).url;
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(urls));
+                context.startActivity(intent);
             }
         });
     }
@@ -55,9 +63,8 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistView
 
     public  class ArtistViewHolder extends RecyclerView.ViewHolder{
 
-        ImageView star,star2;
-        TextView txtNombre, listenme, views;
-        String name, lisent, view;
+        ImageView star;
+        TextView txtNombre, listenme, views, url;
         PojoArtists item;
         View layout;
 
@@ -69,18 +76,17 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistView
             txtNombre = itemView.findViewById(R.id.txtNameArtist);
             listenme = itemView.findViewById(R.id.txtListen);
             views = itemView.findViewById(R.id.txtViews);
+            url = itemView.findViewById(R.id.urlview);
+
         }
 
         public void setData(PojoArtists item) {
             this.item = item;
             Picasso.with(context).load(item.image.get(0).text).into(star);
-            //star2 = star.getDrawable();
+            url.setText(item.url);
             txtNombre.setText(item.name);
-            name = txtNombre.getText().toString();
             listenme.setText(item.streamable);
-            lisent = listenme.getText().toString();
             views.setText(item.playcount);
-            view = views.getText().toString();
         }
 
     }
@@ -91,7 +97,9 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistView
         notifyDataSetChanged();
     }
 
-    public interface IAdapterRecylcer{
-        void clickItem(PojoArtists item);
+    public void filter(List<PojoArtists> artistsfilter){
+        this.artistList = artistsfilter;
+        notifyDataSetChanged();
     }
+
 }

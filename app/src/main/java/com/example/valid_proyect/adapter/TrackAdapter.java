@@ -1,6 +1,8 @@
 package com.example.valid_proyect.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,12 +22,11 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
 
     private List<PojoTracks> trackList;
     Context context;
-    IAdaptersRecylcer click;
+    String urls;
 
-    public TrackAdapter(Context context, List<PojoTracks> trackList, IAdaptersRecylcer click) {
+    public TrackAdapter(Context context, List<PojoTracks> trackList) {
         this.trackList = trackList;
         this.context = context;
-        this.click = click;
     }
 
     @NonNull
@@ -40,7 +41,9 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                click.clickItem(trackList.get(position));
+                urls = trackList.get(position).url;
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(urls));
+                context.startActivity(intent);
             }
         });
     }
@@ -56,7 +59,7 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
     public class TrackViewHolder extends RecyclerView.ViewHolder {
 
         ImageView star;
-        TextView txtNombre, listenme, views;
+        TextView txtNombre, listenme, views, url;
         PojoTracks item;
         View layout;
 
@@ -67,6 +70,7 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
             txtNombre = itemView.findViewById(R.id.txtNameArtist);
             listenme = itemView.findViewById(R.id.txtListen);
             views = itemView.findViewById(R.id.txtViews);
+            url = itemView.findViewById(R.id.urlview);
             //duration =itemView.findViewById(R.id.txtDuration);
         }
 
@@ -74,6 +78,7 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
 
             this.item = item;
             Picasso.with(context).load(item.image.get(0).text).into(star);
+            url.setText(item.url);
             txtNombre.setText(item.name);
             listenme.setText(item.duration);
             views.setText(item.listeners);
@@ -84,9 +89,5 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
         trackList.clear();
         trackList.addAll(newList);
         notifyDataSetChanged();
-    }
-
-    public interface IAdaptersRecylcer{
-        void clickItem(PojoTracks item);
     }
 }

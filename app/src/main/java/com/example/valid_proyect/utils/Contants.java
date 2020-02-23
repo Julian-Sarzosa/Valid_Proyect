@@ -17,6 +17,8 @@ public class Contants {
     public static final int topArtists_streamable_inx = 3;
     public static final String topArtists_playcount = "playcount";
     public static final int topArtists_playcount_inx = 4;
+    public static final String topArtists_urlcount = "url";
+    public static final int topArtists_urlcount_inx = 5;
 
     public static final String topTracks_id = "id";
     public static final int topTracks_id_inx = 0;
@@ -28,4 +30,6 @@ public class Contants {
     public static final int topTracks_duration_inx = 3;
     public static final String topTracks_listeners = "listeners";
     public static final int topTracks_listeners_inx = 4;
+    public static final String topTracks_urlcount = "url";
+    public static final int topTracks_urlcount_inx = 5;
 }
