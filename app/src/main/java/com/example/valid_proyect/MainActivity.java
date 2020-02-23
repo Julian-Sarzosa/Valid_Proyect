@@ -8,23 +8,24 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.EditText;
 
 import com.example.valid_proyect.fragments.Artist;
 import com.example.valid_proyect.fragments.Tracks;
-import com.firebase.ui.auth.AuthUI;
+import com.example.valid_proyect.models.PojoTracks;
 import com.google.android.material.tabs.TabLayout;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int MY_REQUEST_CODE = 7117;
     private TabLayout tabs;
     private ViewPager viewPager;
     private String text1,text2;
     private Adapter adapter;
-    private List<AuthUI.IdpConfig> providers;
+    private EditText search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,22 +34,31 @@ public class MainActivity extends AppCompatActivity {
         tabs = findViewById(R.id.tabselection);
         viewPager = findViewById(R.id.containerpage);
         SetUpViewPager(viewPager,tabs);
-        /*providers = Arrays.asList(
-                new AuthUI.IdpConfig.EmailBuilder().build(),
-                new AuthUI.IdpConfig.PhoneBuilder().build(),
-                new AuthUI.IdpConfig.FacebookBuilder().build(),
-                new AuthUI.IdpConfig.GoogleBuilder().build()
-        );
-        showSingIn();*/
+        search = findViewById(R.id.search);
+        //searchList();
+        /**/
     }
 
-    private void showSingIn() {
-        startActivityForResult(
-                AuthUI.getInstance().createSignInIntentBuilder()
-                .setAvailableProviders(providers)
-                .setTheme(R.style.MyTheme)
-                .build(),MY_REQUEST_CODE
-        );
+    private void searchList() {
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                filter(s.toString());
+            }
+        });
+    }
+
+    private void filter(String toString) {
     }
 
     private void SetUpViewPager(ViewPager viewPager, TabLayout tabs) {
@@ -94,5 +104,4 @@ public class MainActivity extends AppCompatActivity {
             // Show 2 total pages.
             return 2;
         }
-    }
-}
+    }}

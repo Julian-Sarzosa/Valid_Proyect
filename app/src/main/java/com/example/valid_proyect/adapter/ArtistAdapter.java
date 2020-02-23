@@ -1,6 +1,5 @@
 package com.example.valid_proyect.adapter;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,18 +11,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.valid_proyect.R;
-import com.example.valid_proyect.pojo.NewPojoTopArtists;
+import com.example.valid_proyect.models.PojoArtists;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistViewHolder>{
 
-    private List<NewPojoTopArtists.topartists.artist> artistList;
+    private List<PojoArtists> artistList;
     Context context;
     IAdapterRecylcer click;
 
-    public ArtistAdapter(Context context, List<NewPojoTopArtists.topartists.artist> artistList, IAdapterRecylcer click  ) {
+    public ArtistAdapter(Context context, List<PojoArtists> artistList, IAdapterRecylcer click  ) {
         this.artistList = artistList;
         this.context = context;
         this.click = click;
@@ -59,7 +58,7 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistView
         ImageView star,star2;
         TextView txtNombre, listenme, views;
         String name, lisent, view;
-        NewPojoTopArtists.topartists.artist item;
+        PojoArtists item;
         View layout;
 
         public ArtistViewHolder(@NonNull View itemView) {
@@ -72,7 +71,7 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistView
             views = itemView.findViewById(R.id.txtViews);
         }
 
-        public void setData(NewPojoTopArtists.topartists.artist item) {
+        public void setData(PojoArtists item) {
             this.item = item;
             Picasso.with(context).load(item.image.get(0).text).into(star);
             //star2 = star.getDrawable();
@@ -82,23 +81,17 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistView
             lisent = listenme.getText().toString();
             views.setText(item.playcount);
             view = views.getText().toString();
-            if (!name.isEmpty() && !lisent.isEmpty() && !view.isEmpty()) {
-                ContentValues sv = new ContentValues();
-                sv.put("name", name);
-                sv.put("lisent", name);
-                sv.put("view", name);
-            }
         }
 
     }
 
-    public void swap(List<NewPojoTopArtists.topartists.artist> newList){
+    public void swap(List<PojoArtists> newList){
         artistList.clear();
         artistList.addAll(newList);
         notifyDataSetChanged();
     }
 
     public interface IAdapterRecylcer{
-        void clickItem(NewPojoTopArtists.topartists.artist item);
+        void clickItem(PojoArtists item);
     }
 }

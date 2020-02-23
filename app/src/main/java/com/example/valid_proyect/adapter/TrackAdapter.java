@@ -11,18 +11,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.valid_proyect.R;
-import com.example.valid_proyect.pojo.NewPojoTopTracks;
+import com.example.valid_proyect.models.PojoTracks;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHolder>{
 
-    private List<NewPojoTopTracks.tracks.track> trackList;
+    private List<PojoTracks> trackList;
     Context context;
     IAdaptersRecylcer click;
 
-    public TrackAdapter(Context context, List<NewPojoTopTracks.tracks.track> trackList, IAdaptersRecylcer click) {
+    public TrackAdapter(Context context, List<PojoTracks> trackList, IAdaptersRecylcer click) {
         this.trackList = trackList;
         this.context = context;
         this.click = click;
@@ -43,7 +43,6 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
                 click.clickItem(trackList.get(position));
             }
         });
-
     }
 
     @Override
@@ -57,16 +56,12 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
     public class TrackViewHolder extends RecyclerView.ViewHolder {
 
         ImageView star;
-        TextView txtNombre;
-        TextView listenme;
-        TextView duration;
-        TextView views;
-        NewPojoTopTracks.tracks.track item;
+        TextView txtNombre, listenme, views;
+        PojoTracks item;
         View layout;
 
         public TrackViewHolder(@NonNull View itemView) {
             super(itemView);
-
             layout = itemView;
             star = itemView.findViewById(R.id.star);
             txtNombre = itemView.findViewById(R.id.txtNameArtist);
@@ -75,23 +70,23 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
             //duration =itemView.findViewById(R.id.txtDuration);
         }
 
-        public void setData(NewPojoTopTracks.tracks.track item) {
+        public void setData(PojoTracks item) {
+
             this.item = item;
             Picasso.with(context).load(item.image.get(0).text).into(star);
             txtNombre.setText(item.name);
-            listenme.setText(item.streamable.text);
+            listenme.setText(item.duration);
             views.setText(item.listeners);
-            //duration.setText(item.duration);
         }
     }
 
-    public void swap(List<NewPojoTopTracks.tracks.track> newList){
+    public void swap(List<PojoTracks> newList){
         trackList.clear();
         trackList.addAll(newList);
         notifyDataSetChanged();
     }
 
     public interface IAdaptersRecylcer{
-        void clickItem(NewPojoTopTracks.tracks.track item);
+        void clickItem(PojoTracks item);
     }
 }
