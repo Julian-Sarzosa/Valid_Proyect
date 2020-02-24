@@ -120,7 +120,7 @@ public class Artist extends Fragment {
 
                     PojoArtists artistsTemp = new PojoArtists();
                     artistsTemp.name = cursor.getString(Contants.topArtists_name_inx);
-                    artistsTemp.url = cursor.getString(Contants.topArtists_urlcount_inx);
+                    //artistsTemp.url = cursor.getString(Contants.topArtists_urlcount_inx);
                     artistsTemp.image = pojoImages;
                     artistsTemp.streamable = cursor.getString(Contants.topArtists_streamable_inx);
                     artistsTemp.playcount = cursor.getString(Contants.topArtists_playcount_inx);

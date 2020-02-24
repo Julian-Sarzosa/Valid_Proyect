@@ -27,6 +27,7 @@ public class TracksSql {
         values.put(Contants.topTracks_image, tracks.image.get(0).text);
         values.put(Contants.topTracks_duration, tracks.duration);
         values.put(Contants.topTracks_listeners, tracks.listeners);
+       // values.put(Contants.topTracks_urlcount, tracks.url);
 
         database.insert(Contants.topTracks, Contants.topTracks_id, values);
     }
