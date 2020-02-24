@@ -41,8 +41,8 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (urls!=null) {
-                    urls = trackList.get(position).url;
+                urls = trackList.get(position).url;
+                if (urls!=null || urls != "0") {
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(urls));
                     context.startActivity(intent);
                 }

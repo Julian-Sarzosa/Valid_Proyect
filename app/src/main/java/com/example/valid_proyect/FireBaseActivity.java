@@ -26,13 +26,22 @@ public class FireBaseActivity extends AppCompatActivity {
 
     private static final int MY_REQUEST_CODE = 7117;
     private List<AuthUI.IdpConfig> providers;
-    Button Sing_Out;
+    Button Sing_Out,Sing_In;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fire_base);
         Sing_Out = findViewById(R.id.singout);
+        Sing_In = findViewById(R.id.singin);
+        Sing_In.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                showSingIn();
+            }
+        });
+
         Sing_Out.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,6 +50,7 @@ public class FireBaseActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 Sing_Out.setEnabled(false);
+                                Sing_In.setEnabled(true);
                                 Intent intent = new Intent(FireBaseActivity.this, MainActivity.class);
                                 startActivity(intent);
                             }
@@ -55,7 +65,6 @@ public class FireBaseActivity extends AppCompatActivity {
         providers = Arrays.asList(
                 new AuthUI.IdpConfig.EmailBuilder().build()
         );
-        showSingIn();
     }
 
     private void showSingIn() {
@@ -65,6 +74,7 @@ public class FireBaseActivity extends AppCompatActivity {
                 .setTheme(R.style.MyTheme)
                 .build(),MY_REQUEST_CODE
         );
+        Sing_In.setEnabled(false);
     }
 
     @Override
