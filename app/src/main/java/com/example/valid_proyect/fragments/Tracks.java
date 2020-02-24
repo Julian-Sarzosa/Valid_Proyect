@@ -115,6 +115,7 @@ public class Tracks extends Fragment {
 
                     PojoTracks tracksTemp = new PojoTracks();
                     tracksTemp.name = cursor.getString(Contants.topTracks_name_inx);
+                    artistsTemp.url = cursor.getString(Contants.topTracks_urlcount_inx);
                     tracksTemp.image = pojoImages;
                     tracksTemp.duration = cursor.getString(Contants.topTracks_duration_inx);
                     tracksTemp.listeners = cursor.getString(Contants.topTracks_listeners_inx);
