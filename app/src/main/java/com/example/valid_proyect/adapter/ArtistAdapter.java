@@ -46,8 +46,8 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistView
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                urls = artistList.get(position).url;
-                if (urls!=null || urls != "0") {
+                if (urls!=null) {
+                    urls = artistList.get(position).url;
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(urls));
                     context.startActivity(intent);
                 }
@@ -86,6 +86,7 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistView
             this.item = item;
             Picasso.with(context).load(item.image.get(0).text).into(star);
             url.setText(item.url);
+            urls = item.url;
             txtNombre.setText(item.name);
             listenme.setText(item.streamable);
             views.setText(item.playcount);
