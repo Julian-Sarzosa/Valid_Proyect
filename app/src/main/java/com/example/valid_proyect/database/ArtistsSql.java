@@ -26,7 +26,7 @@ public class ArtistsSql {
         values.put(Contants.topArtists_image, artist.image.get(0).text);
         values.put(Contants.topArtists_streamable, artist.streamable);
         values.put(Contants.topArtists_playcount, artist.playcount);
-        values.put(Contants.topArtists_urlcount, artist.url);
+        //values.put(Contants.topArtists_urlcount, artist.url);
 
         database.insert(Contants.topArtists, Contants.topArtists_id, values);
     }
