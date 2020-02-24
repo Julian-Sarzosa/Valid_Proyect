@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void filter(String element) {
+    /*private void filter(String element) {
         String artistl;
         ArtistsSql artistsSql = new ArtistsSql(this);
         Cursor cursor = artistsSql.read();
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         artistAdapter.filter(pojoArtists);
-    }
+    }*/
 
     private void SetUpViewPager(ViewPager viewPager, TabLayout tabs) {
         adapter = new Adapter(getSupportFragmentManager());

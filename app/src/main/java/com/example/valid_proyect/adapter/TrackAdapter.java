@@ -22,7 +22,7 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
 
     private List<PojoTracks> trackList;
     Context context;
-    String urls;
+    String urls = null;
 
     public TrackAdapter(Context context, List<PojoTracks> trackList) {
         this.trackList = trackList;
@@ -41,9 +41,11 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                urls = trackList.get(position).url;
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(urls));
-                context.startActivity(intent);
+                if (urls!=null) {
+                    urls = trackList.get(position).url;
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(urls));
+                    context.startActivity(intent);
+                }
             }
         });
     }
