@@ -2,26 +2,27 @@ package com.example.valid_proyect;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.widget.EditText;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.SearchView;
+import android.widget.Toast;
 
-import com.example.valid_proyect.adapter.ArtistAdapter;
+import com.example.valid_proyect.adapter.TrackAdapter;
 import com.example.valid_proyect.database.ArtistsSql;
 import com.example.valid_proyect.fragments.Artist;
 import com.example.valid_proyect.fragments.Tracks;
 import com.example.valid_proyect.models.PojoArtists;
-import com.example.valid_proyect.models.PojoImages;
-import com.example.valid_proyect.models.PojoTracks;
 import com.example.valid_proyect.utils.Contants;
 import com.google.android.material.tabs.TabLayout;
 
@@ -34,56 +35,25 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private String text1,text2;
     private Adapter adapter;
-    private EditText search;
-    String searchelement;
-    RecyclerView recyclerView;
-    List<PojoArtists> artistList;
-    ArtistAdapter artistAdapter;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        toolbar = findViewById(R.id.toolBar);
+        setSupportActionBar(toolbar);
         tabs = findViewById(R.id.tabselection);
         viewPager = findViewById(R.id.containerpage);
         SetUpViewPager(viewPager,tabs);
-        search = findViewById(R.id.search);
-        searchelement = search.getText().toString();
-        search.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                //filter(s.toString());
-            }
-        });
     }
 
-    /*private void filter(String element) {
-        String artistl;
-        ArtistsSql artistsSql = new ArtistsSql(this);
-        Cursor cursor = artistsSql.read();
-
-        List<PojoArtists> pojoArtists= new ArrayList<>();
-
-        while(cursor.moveToNext()){
-            PojoArtists artistsTemp = new PojoArtists();
-            artistsTemp.name = cursor.getString(Contants.topArtists_name_inx);
-            artistl = artistsTemp.name;
-            if (artistl.toLowerCase().contains(element.toLowerCase())){
-                pojoArtists.add(artistsTemp);
-            }
-        }
-        artistAdapter.filter(pojoArtists);
-    }*/
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_menu,menu);
+        super.onCreateOptionsMenu(menu);
+        return true;
+    }
 
     private void SetUpViewPager(ViewPager viewPager, TabLayout tabs) {
         adapter = new Adapter(getSupportFragmentManager());

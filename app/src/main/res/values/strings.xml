@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Valid_Proyect</string>
+    <string name="app_name">ValidProyect</string>
 
     // Fragments Name
     <string name="artist">Artist</string>
@@ -8,4 +8,5 @@
         una vez cargadas estas listas cerrar la app y volerla abrir, para que carguen los datos sin wifi.
     </string>
     <string name="singout">Cerrar Sesión</string>
+    <string name="singin">Iniciar Sesión</string>
 </resources>

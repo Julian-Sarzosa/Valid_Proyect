@@ -81,6 +81,7 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
             this.item = item;
             Picasso.with(context).load(item.image.get(0).text).into(star);
             url.setText(item.url);
+            urls = item.url;
             txtNombre.setText(item.name);
             listenme.setText(item.duration);
             views.setText(item.listeners);

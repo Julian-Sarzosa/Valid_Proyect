@@ -15,12 +15,24 @@
         android:text="@string/text"></TextView>
 
     <Button
+        android:id="@+id/singin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:translationY="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/text1"
+        android:text="@string/singin"
+        android:textSize="20sp"></Button>
+
+    <Button
         android:id="@+id/singout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="10dp"
+        android:translationY="40dp"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/text1"
+        android:layout_below="@+id/singin"
         android:enabled="false"
         android:text="@string/singout"
         android:textSize="20sp"></Button>

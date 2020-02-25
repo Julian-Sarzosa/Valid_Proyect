@@ -86,6 +86,7 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistView
             this.item = item;
             Picasso.with(context).load(item.image.get(0).text).into(star);
             url.setText(item.url);
+            urls = item.url;
             txtNombre.setText(item.name);
             listenme.setText(item.streamable);
             views.setText(item.playcount);
