@@ -3,25 +3,35 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/grisclaro"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <EditText
-        android:id="@+id/search"
-        android:hint="Buscador"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="1dp">
-
-    </EditText>
+    <include
+        layout="@layout/toolbar_layout"
+        android:id="@+id/toolBar1">
+    </include>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabselection"
         android:layout_width="match_parent"
-        android:textColor="@color/blanco"
         android:background="@color/grisOscuro"
-        android:layout_below="@+id/search"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+        android:layout_below="@+id/toolBar1"
         android:layout_height="wrap_content">
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:text="text2"
+            android:layout_height="wrap_content">
+
+        </com.google.android.material.tabs.TabItem>
+        <com.google.android.material.tabs.TabItem
+            android:text="text2"
+            android:textColor="@color/blanco"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </com.google.android.material.tabs.TabItem>
     </com.google.android.material.tabs.TabLayout>
     <!--THIS IS CONTAINER-->
     <androidx.viewpager.widget.ViewPager

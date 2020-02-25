@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Valid_Proyect</string>
+    <string name="app_name">ValidProyect</string>
 
     // Fragments Name
     <string name="artist">Artist</string>
