@@ -15,7 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.valid_proyect.R;
-import com.example.valid_proyect.models.PojoArtists;
 import com.example.valid_proyect.models.PojoTracks;
 import com.squareup.picasso.Picasso;
 

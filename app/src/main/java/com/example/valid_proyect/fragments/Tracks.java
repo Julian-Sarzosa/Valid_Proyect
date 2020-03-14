@@ -23,7 +23,6 @@ import com.example.valid_proyect.adapter.TrackAdapter;
 import com.example.valid_proyect.database.TracksSql;
 import com.example.valid_proyect.interfaces.Track_Interface;
 import com.example.valid_proyect.models.PojoImages;
-import com.example.valid_proyect.models.PojoStremeable;
 import com.example.valid_proyect.models.PojoTopTracksApi;
 import com.example.valid_proyect.models.PojoTracks;
 import com.example.valid_proyect.utils.Contants;
