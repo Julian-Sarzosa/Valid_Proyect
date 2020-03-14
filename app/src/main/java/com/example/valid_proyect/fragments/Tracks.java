@@ -3,10 +3,17 @@ package com.example.valid_proyect.fragments;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,7 +36,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Tracks extends Fragment {
+public class Tracks extends Fragment implements SearchView.OnQueryTextListener{
 
     //variables
     private View view;
@@ -37,9 +44,38 @@ public class Tracks extends Fragment {
     RecyclerView recyclerView;
     List<PojoTracks> tracksList;
     TrackAdapter tracksAdapter;
+    SearchView searchView;
 
     public Tracks() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        getActivity().getMenuInflater().inflate(R.menu.toolbar_menu,menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        searchView = (SearchView) searchItem.getActionView();
+        searchView.setQueryHint("Search...");
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        searchView.setOnQueryTextListener(this);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        tracksAdapter.getFilter().filter(newText);
+        return false;
     }
 
     @Override
@@ -49,17 +85,12 @@ public class Tracks extends Fragment {
         view = inflater.inflate(R.layout.fragment_tracks, container, false);
 
         reference();
-        eventClickRecycler();
         chargeJson();
-
         return view;
     }
 
     private void reference() {
         recyclerView = view.findViewById(R.id.listtracks);
-    }
-
-    private void eventClickRecycler() {
     }
 
     private void inflateRecycler() {

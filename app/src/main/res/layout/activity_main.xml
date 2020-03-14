@@ -8,16 +8,17 @@
     tools:context=".MainActivity">
 
     <include
+        android:id="@+id/toolBar"
         layout="@layout/toolbar_layout"
-        android:id="@+id/toolBar1">
+        >
     </include>
 
     <com.google.android.material.tabs.TabLayout
+        android:layout_below="@+id/toolBar"
         android:id="@+id/tabselection"
         android:layout_width="match_parent"
         android:background="@color/grisOscuro"
         android:theme="@style/ThemeOverlay.AppCompat.Dark"
-        android:layout_below="@+id/toolBar1"
         android:layout_height="wrap_content">
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"

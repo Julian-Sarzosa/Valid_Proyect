@@ -1,33 +1,27 @@
 package com.example.valid_proyect.fragments;
 
-import android.app.SearchManager;
-import android.content.Context;
-import android.content.Intent;
+
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SearchView;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.view.MenuItemCompat;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.valid_proyect.MainActivity;
 import com.example.valid_proyect.R;
 import com.example.valid_proyect.adapter.ArtistAdapter;
 import com.example.valid_proyect.database.ArtistsSql;
-import com.example.valid_proyect.database.Database;
 import com.example.valid_proyect.interfaces.Artist_Interface;
 import com.example.valid_proyect.models.PojoArtists;
 import com.example.valid_proyect.models.PojoImages;
@@ -42,16 +36,16 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Artist extends Fragment{
+public class Artist extends Fragment implements SearchView.OnQueryTextListener{
 
     //variables
     private View view;
-    Context context;
 
     RecyclerView recyclerView;
     List<PojoArtists> artistList;
     ArtistAdapter artistAdapter;
-    SearchView searchView = null;
+    SearchView searchView;
+    SearchView.OnQueryTextListener queryTextListener;
 
     public Artist() {
     }
@@ -64,60 +58,37 @@ public class Artist extends Fragment{
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        Toast.makeText(getContext(), "prueba", Toast.LENGTH_LONG).show();
+        getActivity().getMenuInflater().inflate(R.menu.toolbar_menu,menu);
         MenuItem searchItem = menu.findItem(R.id.action_search);
-        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
-        if (searchItem != null)
-        {
-            searchView = (SearchView) searchItem.getActionView();
-            Toast.makeText(getContext(), "prueba", Toast.LENGTH_LONG).show();
-        }
+        searchView = (SearchView) searchItem.getActionView();
         searchView.setQueryHint("Search...");
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
-        searchView.setIconifiedByDefault(false);
-        if (searchView != null)
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        searchView.setOnQueryTextListener(this);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        artistAdapter.getFilter().filter(newText);
+        return false;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId())
         {
-            SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextSubmit(String query) {
-                    Log.d( query,"search");
-
-                    Toast.makeText(getContext(), query, Toast.LENGTH_LONG).show();
-
-                    return true;
-                }
-
-                @Override
-                public boolean onQueryTextChange(String newText) {
-                    Log.d(newText,"search");
-
-                    Toast.makeText(getContext(), newText, Toast.LENGTH_LONG).show();
-
-                    String input = newText.toLowerCase();
-                    String artistl;
-                    ArtistsSql artistsSql = new ArtistsSql(getContext());
-                    Cursor cursor = artistsSql.read();
-
-                    List<PojoArtists> pojoArtists= new ArrayList<>();
-
-                    while(cursor.moveToNext()){
-                        PojoArtists artistsTemp = new PojoArtists();
-                        artistsTemp.name = cursor.getString(Contants.topArtists_name_inx);
-                        artistl = artistsTemp.name;
-                        if (artistl.toLowerCase().contains(input.toLowerCase())){
-                            pojoArtists.add(artistsTemp);
-                        }
-                    }
-
-                    artistList = pojoArtists;
-                    inflateRecycler();
-                    //artistAdapter.filter(pojoArtists);
-                    return true;
-                }
-            };
-            searchView.setOnQueryTextListener(queryTextListener);
+            case R.id.action_search:
+                return false;
+                default:
+                    break;
         }
+        searchView.setOnQueryTextListener(queryTextListener);
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -126,7 +97,6 @@ public class Artist extends Fragment{
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_artist, container, false);
         reference();
-        eventClickRecycler();
         chargeJson();
 
         return view;
@@ -134,9 +104,6 @@ public class Artist extends Fragment{
 
     private void reference() {
         recyclerView = view.findViewById(R.id.listartist);
-    }
-
-    private void eventClickRecycler() {
     }
 
     private void inflateRecycler() {
@@ -209,5 +176,4 @@ public class Artist extends Fragment{
             }
         });
     }
-
 }
