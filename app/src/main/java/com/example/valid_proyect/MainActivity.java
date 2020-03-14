@@ -2,32 +2,24 @@ package com.example.valid_proyect;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import android.app.SearchManager;
-import android.content.Context;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.SearchView;
-import android.widget.Toast;
+import android.view.inputmethod.EditorInfo;
 
+import com.example.valid_proyect.adapter.ArtistAdapter;
 import com.example.valid_proyect.adapter.TrackAdapter;
-import com.example.valid_proyect.database.ArtistsSql;
 import com.example.valid_proyect.fragments.Artist;
 import com.example.valid_proyect.fragments.Tracks;
-import com.example.valid_proyect.models.PojoArtists;
-import com.example.valid_proyect.utils.Contants;
 import com.google.android.material.tabs.TabLayout;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,18 +33,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        toolbar = findViewById(R.id.toolBar);
-        setSupportActionBar(toolbar);
         tabs = findViewById(R.id.tabselection);
         viewPager = findViewById(R.id.containerpage);
+        toolbar = findViewById(R.id.toolBar);
+        setSupportActionBar(toolbar);
         SetUpViewPager(viewPager,tabs);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_menu,menu);
-        super.onCreateOptionsMenu(menu);
-        return true;
     }
 
     private void SetUpViewPager(ViewPager viewPager, TabLayout tabs) {
@@ -98,4 +83,5 @@ public class MainActivity extends AppCompatActivity {
             // Show 2 total pages.
             return 2;
         }
-    }}
+    }
+}
