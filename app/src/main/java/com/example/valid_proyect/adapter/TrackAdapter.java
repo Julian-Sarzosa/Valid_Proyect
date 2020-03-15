@@ -43,11 +43,15 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
     @Override
     public void onBindViewHolder(@NonNull TrackViewHolder holder, final int position) {
         holder.setData(trackList.get(position));
+        holder.txtNombre.setText(trackList.get(position).name);
+        holder.url.setText(trackList.get(position).url);
+        holder.views.setText(trackList.get(position).duration);
+        holder.listenme.setText(trackList.get(position).listeners);
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                urls = trackList.get(position).url;
                 if (urls!=null) {
-                    urls = trackList.get(position).url;
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(urls));
                     context.startActivity(intent);
                 }
@@ -116,11 +120,6 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.TrackViewHol
 
             this.item = item;
             Picasso.with(context).load(item.image.get(0).text).into(star);
-            url.setText(item.url);
-            urls = item.url;
-            txtNombre.setText(item.name);
-            listenme.setText(item.duration);
-            views.setText(item.listeners);
         }
     }
 

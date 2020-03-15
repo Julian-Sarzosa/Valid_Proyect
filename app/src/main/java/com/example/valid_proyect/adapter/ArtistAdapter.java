@@ -51,8 +51,8 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistView
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                urls = artistList.get(position).url;
                 if (urls!=null) {
-                    urls = artistList.get(position).url;
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(urls));
                     context.startActivity(intent);
                 }
